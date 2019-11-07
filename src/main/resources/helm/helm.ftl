@@ -1,5 +1,5 @@
 set -x
-<#assign helmCmdLine = ["${deployed.container.home}/helm"]/>
+<#assign helmCmdLine = ["${helmclient.home}/helm"]/>
 <#if helmclient.debug>
  <#assign helmCmdLine = helmCmdLine + ["--debug"]/>
 </#if>
@@ -16,4 +16,5 @@ set -x
 </#if>
 
 <#assign helm=helmCmdLine?join(" ")/>
+
 

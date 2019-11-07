@@ -1,0 +1,21 @@
+---
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: Applications/comp/2.0.5
+  type: udm.DeploymentPackage
+  deployables:
+  - name: mariadb
+    type: helm.Chart
+    namespace: demohelm
+    chartName: stable/mariadb
+    chartVersion: 5.2.3
+    configurationFiles:
+    - name: another.yaml
+      type: helm.ConfigFile
+      ex: another
+      file: !file "config.yaml"
+    - name: config.yaml
+      type: helm.ConfigFile
+      ex: benoitbenoit
+      file: !file "config.yaml"

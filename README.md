@@ -1,4 +1,4 @@
-# XL Deploy|Release Description|Interface plugin v1.0.0
+# XL Deploy Helm Plugin
 
 [![Build Status][xld-helm-plugin-travis-image]][xld-helm-plugin-travis-url]
 [![License: MIT][xld-helm-plugin-license-image]][xld-helm-plugin-license-url]
@@ -12,24 +12,21 @@
 
 ## Preface
 
-This document describes the functionality provided by the XL Deploy|Release Description|Interface plugin.
-
-See the [XL Deploy reference manual](https://docs.xebialabs.com/xl-deploy) for background information on XL Deploy and deployment automation concepts.  
-or  
-See the [XL Release reference manual](https://docs.xebialabs.com/xl-release) for background information on XL Release and release automation concepts.  
+This document describes the functionality provided by the XL Deploy Helm plugin 
+Support Helm V2 
 
 ## Overview
 
 ## Requirements
 
-Note:  XLD or XLR version should not be lower than lowest supported version.  See <https://support.xebialabs.com/hc/en-us/articles/115003299946-Supported-XebiaLabs-product-versions>.
+* Overtherepy https://github.com/xebialabs-community/overthere-pylib
 
 ## Installation
 
-* Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xld-helm-plugin/releases) into the `XL_DEPLOY|RELEASE_SERVER/plugins` directory.
-* Restart the XL Deploy|Release server.
+* Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xld-helm-plugin/releases) into the `XL_DEPLOY_SERVER/plugins` directory.
+* Restart the XL Deploy server.
 
-## Features/Usage/Types/Tasks
+## Features
 
 ## References
 

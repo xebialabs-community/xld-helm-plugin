@@ -1,0 +1,12 @@
+language: java
+deploy:
+  provider: releases
+  api_key:
+    secure: IpURF12piV51mEu35jJ27+GxvMan6FYyVw7j6R9psuqFT4ss7iNLSDUo64fVfQ8M7dXTyAqJ8f0T/LTHE+uU5245EDby21GhgattEZqfUQ6DjZoNusAP0oNLcxppMiFtc5MI0JP938Zh4UoydsiV4LA5LC3nmn73zAsgqpOdKIqgiVy7p+OWWqZQfjYaQCiKMULpGiYhojPLC9XWnFHiBSKaYGMwlTlSLPrc2pB4Kjqk1UwZ8y/K5A7u1H1FRjkYhdnsihluXQ5RFw+mBTxajsDoSB1sxiSszp2WJj7bnVN74pjAo3R1favoyJSQ60ZgtKQOpgP3R8FbX0Ev/4tTswBqyFGvvzHJPHjConATtVxC8k9xVG4DjgRFJuPTD4+6tDh8HBibiMYrVrCc79p1HHPOsDgOB46m87VUCc7Pp2JsdwK5F0aLWBU/niQ7jCzcaVJEzlyzDQUv/lcw3T7omOJ36Q4+0ax5LkIPPg7Xqd33yowSaHTlD9QRqJ3EL6cO1dVmG7ETG8t8FY8I8Q+ys/klicNUP55wGR+GczN9U5vtrX/VGCpxFAIzh/Ve6CgGdY8G1wdINozPRNPcC7SkE/kzBnovVfhY+Ka2oeDwujUrJg9t9ueShrmLruHSpSzCMkDEkQMWaiS5rLz4hFm1Tp6MmcnAwSP9KJdh2SZ9ZVg=
+  file_glob: true
+  file: build/libs/*
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/xld-helm-plugin

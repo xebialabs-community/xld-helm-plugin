@@ -55,6 +55,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           <helmclient expression="true">deployed.container</helmclient>
         </freemarker-context>
       </os-script>
+      <os-script>
+        <order>62</order>
+        <description expression="true">"Get the Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
+        <script>helm/get</script>
+        <freemarker-context>
+          <helmclient expression="true">deployed.container</helmclient>
+        </freemarker-context>
+      </os-script>
 
     </steps>
   </rule>
@@ -79,6 +87,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <order>62</order>
         <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
         <script>helm/status</script>
+        <freemarker-context>
+          <helmclient expression="true">deployed.container</helmclient>
+        </freemarker-context>
+      </os-script>
+      <os-script>
+        <order>62</order>
+        <description expression="true">"Get the Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
+        <script>helm/get</script>
         <freemarker-context>
           <helmclient expression="true">deployed.container</helmclient>
         </freemarker-context>

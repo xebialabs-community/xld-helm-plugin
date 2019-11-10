@@ -37,18 +37,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.ConfigFile" as-containment="true"/>
   </type-modification>
 
-  <type type="helm.ConfiguredRelease" extends="udm.BaseDeployedArtifact" 
-    container-type="helm.Client" deployable-type="helm.ChartWithConfigFile">
-    <generate-deployable type="helm.ChartWithConfigFile" extends="udm.BaseDeployableFileArtifact"/>
-    <property name="namespace" />
-    <property name="chartName" />
-    <property name="chartVersion" />
-  </type>
-
-  <type-modification type="helm.ChartWithConfigFile">
-    <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json | htm | html | xml | xsd | xsl | xslt)"/>
-  </type-modification>
-
   <type-modification type="helm.ConfigFile">
     <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json | htm | html | xml | xsd | xsl | xslt)"/>
   </type-modification>

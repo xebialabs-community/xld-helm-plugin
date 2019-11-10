@@ -37,14 +37,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       <operation>CREATE</operation>
     </conditions>
     <steps>
-      <os-script>
+      <jython>
         <order>60</order>
         <description expression="true">"Install the Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
-        <script>helm/install</script>
-        <freemarker-context>
+        <script>helm/helmrunner.py</script>
+        <jython-context>
           <helmclient expression="true">deployed.container</helmclient>
-        </freemarker-context>
-      </os-script>
+          <helmcommand>install</helmcommand>
+        </jython-context>
+        <preview-script>helm/preview_install.py</preview-script>
+      </jython>
       <os-script>
         <order>62</order>
         <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
@@ -64,14 +66,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       <operation>MODIFY</operation>
     </conditions>
     <steps>
-      <os-script>
+      <jython>
         <order>60</order>
         <description expression="true">"Upgrade the Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
-        <script>helm/upgrade</script>
-        <freemarker-context>
+        <script>helm/helmrunner.py</script>
+        <jython-context>
           <helmclient expression="true">deployed.container</helmclient>
-        </freemarker-context>
-      </os-script>
+          <helmcommand>upgrade</helmcommand>
+        </jython-context>
+      </jython>
       <os-script>
         <order>62</order>
         <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.namespace)</description>
@@ -84,7 +87,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     </steps>
   </rule>
 
-   <rule name="helm.release.undeploy" scope="deployed">
+  <rule name="helm.release.undeploy" scope="deployed">
     <conditions>
       <type>helm.Release</type>
       <type>helm.ConfiguredRelease</type>
@@ -96,6 +99,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <description expression="true">"Uninstall the Helm {0} release from {1} namespace".format(previousDeployed.name,previousDeployed.namespace)</description>
         <script>helm/delete</script>
         <freemarker-context>
+          <helmcommand>install</helmcommand>
           <helmclient expression="true">previousDeployed.container</helmclient>
         </freemarker-context>
       </os-script>

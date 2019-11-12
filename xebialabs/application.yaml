@@ -1,0 +1,35 @@
+---
+apiVersion: xl-deploy/v1
+kind: Applications
+spec:
+- name: MyHelmSampleApp
+  type: udm.Application
+  children:
+  - name: 2.0.4
+    type: udm.DeploymentPackage
+    deployables:
+    - name: mariadb
+      type: helm.Chart
+      chartName: stable/mariadb
+      chartVersion: 5.2.0
+      configurationFiles:
+      - name: config.yaml
+        type: helm.ConfigFile
+        file: !file "artifacts/config.yaml"
+      - name: override.yaml
+        type: helm.ConfigFile
+        file: !file "artifacts/override.yaml"
+  - name: 2.0.5
+    type: udm.DeploymentPackage
+    deployables:
+    - name: mariadb
+      type: helm.Chart
+      chartName: stable/mariadb
+      chartVersion: 5.2.3
+      configurationFiles:
+      - name: config.yaml
+        type: helm.ConfigFile
+        file: !file "artifacts/config205.yaml"
+      - name: override.yaml
+        type: helm.ConfigFile
+        file: !file "artifacts/override205.yaml"

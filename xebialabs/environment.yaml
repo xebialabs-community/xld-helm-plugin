@@ -1,0 +1,19 @@
+apiVersion: xl-deploy/v1
+kind: Environments
+spec:
+  - name: helm-sample
+    type: core.Directory
+    children:
+    - name: dev.conf
+      type: udm.Dictionary
+      entries:
+        username: scott
+      encryptedEntries:
+        password: tiger
+    - name: xl-demo-helm
+      type: udm.Environment
+      members:
+      - ~Infrastructure/helm-sample/xl-demo-kube/demo-helm
+      dictionaries:
+      - ./dev.conf
+

@@ -27,6 +27,9 @@
     <property name="helmClient" kind="ci" required="false" referenced-type="helm.Client" category="Helm"/>
   </type-modification>
 
+  <type type="helm.ConfigFileSpec" extends="file.File"/>
+  <type type="helm.ChartWithConfigFile" extends="helm.Release"/>
+
   <type type="helm.Release" extends="udm.BaseDeployed" 
     container-type="k8s.Namespace" deployable-type="helm.Chart">
     <generate-deployable type="helm.Chart" extends="udm.BaseDeployable"/>

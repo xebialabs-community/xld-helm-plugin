@@ -1,0 +1,3 @@
+#confgi
+mariadbUser: {{username}}
+mariadbDatabase: {{password}}

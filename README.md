@@ -27,6 +27,11 @@ Testing helm running on Unix machines
 * Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xld-helm-plugin/releases) into the `XL_DEPLOY_SERVER/plugins` directory.
 * Restart the XL Deploy server.
 
+## Sample Configuration
+A sample configuration is available in the project.
+`` xl apply --xl-deploy-url http://localhost:4541 -f xebialabs.yaml ``
+
+
 ## Features
 
 ## References

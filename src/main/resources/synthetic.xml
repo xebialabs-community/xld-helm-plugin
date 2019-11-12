@@ -23,10 +23,13 @@
     <property name="debug" category="Advanced" kind="boolean" default="false" required="false"/>
   </type>
 
+  <type-modification type="k8s.Master">
+    <property name="helmClient" kind="ci" required="false" referenced-type="helm.Client" category="Helm"/>
+  </type-modification>
+
   <type type="helm.Release" extends="udm.BaseDeployed" 
-    container-type="helm.Client" deployable-type="helm.Chart">
+    container-type="k8s.Namespace" deployable-type="helm.Chart">
     <generate-deployable type="helm.Chart" extends="udm.BaseDeployable"/>
-    <property name="namespace" />
     <property name="chartName" />
     <property name="chartVersion" />
     <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.AppliedConfigFile" as-containment="true"/>

@@ -29,7 +29,7 @@ def get_helm_command(helmclient):
 
 def get_install_parameters(session,deployed):
     values = {'chartName':deployed.chartName,
-            'namespace':deployed.namespace,
+            'namespace':deployed.container.namespaceName,
             'name':deployed.name,
             'chartVersion': deployed.chartVersion}
 
@@ -42,7 +42,7 @@ def get_install_parameters(session,deployed):
 
 def get_upgrade_parameters(session,deployed):
     values = {'chartName':deployed.chartName,
-            'namespace':deployed.namespace,
+            'namespace':deployed.container.namespaceName,
             'name':deployed.name,
             'chartVersion': deployed.chartVersion}
 

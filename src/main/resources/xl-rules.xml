@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
 
-    Copyright 2019 XEBIALABS
+Copyright 2019 XEBIALABS
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -->
 <rules xmlns="http://www.xebialabs.com/xl-deploy/xl-rules">
@@ -39,32 +39,13 @@
       <jython>
         <order>60</order>
         <description expression="true">"Install the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/helmrunner.py</script>
+        <script>helm/install.py</script>
         <jython-context>
           <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-          <helmcommand>install</helmcommand>
         </jython-context>
         <preview-script>helm/preview_install.py</preview-script>
       </jython>
-      <os-script>
-        <order>62</order>
-        <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/status</script>
-        <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
-      </os-script>
-      <os-script>
-        <order>62</order>
-        <description expression="true">"Get the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/get</script>
-        <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
-      </os-script>
-
+      <checkpoint/>
     </steps>
   </rule>
 
@@ -77,12 +58,23 @@
       <jython>
         <order>60</order>
         <description expression="true">"Upgrade the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/helmrunner.py</script>
+        <script>helm/upgrade.py</script>
         <jython-context>
           <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-          <helmcommand>upgrade</helmcommand>
         </jython-context>
+        <preview-script>helm/preview_upgrade.py</preview-script>
       </jython>
+      <checkpoint/>
+    </steps>
+  </rule>
+
+  <rule name="helm.release.get" scope="deployed">
+    <conditions>
+      <type>helm.Release</type>
+      <operation>CREATE</operation>
+      <operation>MODIFY</operation>
+    </conditions>
+    <steps>
       <os-script>
         <order>62</order>
         <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
@@ -92,16 +84,27 @@
         </freemarker-context>
         <target-host expression="true">deployed.container.container.helmClient.host</target-host>
       </os-script>
+        </steps>
+  </rule>
+
+
+  <rule name="helm.release.test" scope="deployed">
+    <conditions>
+      <type>helm.Release</type>
+      <operation>CREATE</operation>
+      <operation>MODIFY</operation>
+      <expression>deployed.testRelease</expression>
+    </conditions>
+    <steps>
       <os-script>
-        <order>62</order>
-        <description expression="true">"Get the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/get</script>
+        <order>65</order>
+        <description expression="true">"Test the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
+        <script>helm/test</script>
         <freemarker-context>
           <helmclient expression="true">deployed.container.container.helmClient</helmclient>
         </freemarker-context>
         <target-host expression="true">deployed.container.container.helmClient.host</target-host>
       </os-script>
-
     </steps>
   </rule>
 

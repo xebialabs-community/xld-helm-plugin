@@ -4,12 +4,20 @@ spec:
   - name: helm-sample
     type: core.Directory
     children:
+    - name: localhost
+      type: overthere.LocalHost
+      os: UNIX
+      children:
+        - name: helmClient
+          type: helm.Client
+          home: /usr/local/bin
+          debug: True
     - name: xl-demo-kube
       type: k8s.Master
       apiServerURL: https://192.168.130.134:8443
       skipTLS: true
       debug: true
-      helmClient: ~Infrastructure/localhost/helmClient
+      helmClient: ~Infrastructure/helm-sample/localhost/helmClient
       caCert: |-
         -----BEGIN CERTIFICATE-----
         MIIC5zCCAc+gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5p
@@ -84,13 +92,3 @@ spec:
         - name: demo-helm
           type: k8s.Namespace
           namespaceName: demohelm
-    - name: localhost
-      type: overthere.LocalHost
-      os: UNIX
-      children:
-        - name: helmClient
-          type: helm.Client
-          home: /usr/local/bin
-          debug: True
-
-

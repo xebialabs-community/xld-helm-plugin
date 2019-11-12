@@ -14,7 +14,7 @@
 
 This document describes the functionality provided by the XL Deploy Helm plugin 
 * Support Helm V2 
-* Testing helm running on Unix machines
+* Tested helm running on Unix machines
 
 ## Overview
 

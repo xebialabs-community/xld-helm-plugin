@@ -29,9 +29,37 @@ Testing helm running on Unix machines
 
 ## Sample Configuration
 A sample configuration is available in the project.
-`` xl apply --xl-deploy-url http://localhost:4541 -f xebialabs.yaml ``
+
+```
+$xl apply --xl-deploy-url http://localhost:4541 -f xebialabs.yaml 
 
 
+[1/4] Applying infrastructure.yaml (imported by xebialabs.yaml)
+    Created CI Infrastructure/helm-sample/xl-demo-kube/demo-helm
+    Created CI Infrastructure/helm-sample/xl-demo-kube
+    Created CI Infrastructure/helm-sample/localhost/helmClient
+    Created CI Infrastructure/helm-sample/localhost
+    Created CI Infrastructure/helm-sample
+
+[2/4] Applying environment.yaml (imported by xebialabs.yaml)
+    Created CI Environments/helm-sample/dev.conf
+    Created CI Environments/helm-sample/xl-demo-helm
+    Created CI Environments/helm-sample
+
+[3/4] Applying application.yaml (imported by xebialabs.yaml)
+    Created CI Applications/MyHelmSampleApp/2.0.4/mariadb/config.yaml
+    Created CI Applications/MyHelmSampleApp/2.0.4/mariadb/override.yaml
+    Created CI Applications/MyHelmSampleApp/2.0.4/mariadb
+    Created CI Applications/MyHelmSampleApp/2.0.4
+    Created CI Applications/MyHelmSampleApp/2.0.5/mariadb/config.yaml
+    Created CI Applications/MyHelmSampleApp/2.0.5/mariadb/override.yaml
+    Created CI Applications/MyHelmSampleApp/2.0.5/mariadb
+    Created CI Applications/MyHelmSampleApp/2.0.5
+    Created CI Applications/MyHelmSampleApp
+
+[4/4] Applying xebialabs.yaml
+Done
+```
 ## Features
 
 ## References

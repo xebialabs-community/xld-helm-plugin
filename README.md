@@ -13,16 +13,13 @@
 ## Preface
 
 This document describes the functionality provided by the XL Deploy Helm plugin 
-Support Helm V2 
-Testing helm running on Unix machines
+* Support Helm V2 
+* Testing helm running on Unix machines
 
 ## Overview
 
-## Requirements
-
-* Overtherepy https://github.com/xebialabs-community/overthere-pylib
-
 ## Installation
+* Copy the [overtherepy jar file](https://github.com/xebialabs-community/overthere-pylib/releases/download/v0.0.4/overtherepy-0.0.4.jar) into the `XL_DEPLOY_SERVER/plugins` directory.
 
 * Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xld-helm-plugin/releases) into the `XL_DEPLOY_SERVER/plugins` directory.
 * Restart the XL Deploy server.

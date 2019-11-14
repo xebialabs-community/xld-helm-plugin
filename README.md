@@ -19,6 +19,8 @@ This document describes the functionality provided by the XL Deploy Helm plugin
 ## Overview
 
 ## Installation
+
+* requirement xl-deploy-server 9.0.0+
 * Copy the [overtherepy jar file](https://github.com/xebialabs-community/overthere-pylib/releases/download/v0.0.4/overtherepy-0.0.4.jar) into the `XL_DEPLOY_SERVER/plugins` directory.
 
 * Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xld-helm-plugin/releases) into the `XL_DEPLOY_SERVER/plugins` directory.

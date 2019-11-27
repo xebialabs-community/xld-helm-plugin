@@ -21,12 +21,15 @@
     <property name="kubeContext" required="false" description="Name of the kubeconfig context to use" />
     <property name="kubeConfig"  required="false" description="Absolute path of the kubeconfig file to be used"/>
     <property name="debug" category="Advanced" kind="boolean" default="false" required="false"/>
+
+    <property name="username" required="false" category="Authentication"/>
+    <property name="password" required="false" password="true" category="Authentication" />
+    <property name="caFile"  required="false" category="Authentication" />
   </type>
 
   <type-modification type="k8s.Master">
     <property name="helmClient" kind="ci" required="false" referenced-type="helm.Client" category="Helm"/>
   </type-modification>
-
 
   <type type="helm.Release" extends="udm.BaseDeployed" 
     container-type="k8s.Namespace" deployable-type="helm.Chart">
@@ -35,6 +38,7 @@
     <property name="chartVersion" />
     <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.AppliedConfigFile" as-containment="true"/>
     <property name="testRelease" kind="boolean" default="true" required="false" />
+    
   </type>
 
   <type-modification type="helm.Chart">
@@ -45,10 +49,4 @@
     <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json | htm | html | xml | xsd | xsl | xslt)"/>
   </type-modification>
 
-
-  <type type="helm.AppliedConfigFile" deployable-type="helm.ConfigFile" container-type="helm.Release"
-    extends="udm.EmbeddedDeployedArtifact" description="Helm Configuration File">
-    <generate-deployable type="helm.ConfigFile" extends="udm.EmbeddedDeployableArtifact"/>
-    <property name="ex" default="benoit"/>
-  </type>
 </synthetic>

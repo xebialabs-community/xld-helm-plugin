@@ -28,6 +28,14 @@ class HelmRunner:
             helm = helm + ' --host {0}'.format(self.helmclient.helmHost)
         if self.helmclient.debug:
             helm = helm + ' --debug'
+        
+        if self.helmclient.caFile is not None:
+            helm = helm + ' --ca-file {0}'.format(self.helmclient.caFile)
+
+        if self.helmclient.username is not None:
+            helm = helm + ' --username {0}'.format(self.helmclient.username)
+        if self.helmclient.password is not None:
+            helm = helm + ' --password {0}'.format(self.helmclient.password)
         return helm
 
 

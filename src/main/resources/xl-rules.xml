@@ -23,7 +23,7 @@
         <description expression="true">"Initialize helm on {0}".format(deployed.container.name)</description>
         <script>helm/init</script>
         <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmclient</helmclient>
+          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
         </freemarker-context>
         <target-host expression="true">deployed.container.container.helmClient.host</target-host>
       </os-script>

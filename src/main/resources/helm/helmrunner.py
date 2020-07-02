@@ -72,7 +72,7 @@ class HelmRunner:
 class HelmInstall(HelmRunner):
 
     def command_line(self,session,deployed):
-        return "{0} install {1}".format(self.get_helm_command(),self.parameters(session,deployed))
+        return "{0} upgrade --install {1}".format(self.get_helm_command(),self.parameters(session,deployed))
 
     def parameters(self,session,deployed):
         values = {'chartName':deployed.chartName,

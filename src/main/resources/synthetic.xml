@@ -21,7 +21,7 @@
     <property name="kubeContext" required="false" description="Name of the kubeconfig context to use" />
     <property name="kubeConfig"  required="false" description="Absolute path of the kubeconfig file to be used"/>
     <property name="debug" category="Advanced" kind="boolean" default="false" required="false"/>
-    <property name="version" category="Advanced" kind="enum" default="2" required="false">
+    <property name="version" category="Advanced" kind="enum" default="3" required="false">
       <enum-values>
         <value>2</value>
         <value>3</value>

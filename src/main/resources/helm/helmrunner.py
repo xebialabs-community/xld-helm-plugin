@@ -80,9 +80,7 @@ class HelmInstall(HelmRunner):
                 'name':deployed.name,
                 'chartVersion': deployed.chartVersion}
 
-        if int(self.helmclient.version) == 2:
-            parameters = "{chartName} --namespace {namespace}  --name {name} --version {chartVersion}".format(**values)
-        elif int(self.helmclient.version) == 3:
+        if int(self.helmclient.version) == 2 or int(self.helmclient.version) == 3:
             parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
         else:
             raise Exception("Unknown helm version {0}".format(self.helmclient.version))

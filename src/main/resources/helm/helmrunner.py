@@ -81,7 +81,7 @@ class HelmInstall(HelmRunner):
                 'name':deployed.name,
                 'chartVersion': deployed.chartVersion}
 
-        parameters = "{chartName} --namespace {namespace}  --name {name} --version {chartVersion}".format(**values)
+        parameters = "{name} {chartName} --namespace {namespace}  --version {chartVersion}".format(**values)
         for cf in deployed.configurationFiles:
             uploaded_file = session.upload_file_to_work_dir(cf.getFile())
             parameters = parameters +" -f "+uploaded_file.getPath()

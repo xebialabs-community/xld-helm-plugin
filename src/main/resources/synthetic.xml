@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2019 XEBIALABS
+    Copyright 2020 XEBIALABS
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -21,6 +21,12 @@
     <property name="kubeContext" required="false" description="Name of the kubeconfig context to use" />
     <property name="kubeConfig"  required="false" description="Absolute path of the kubeconfig file to be used"/>
     <property name="debug" category="Advanced" kind="boolean" default="false" required="false"/>
+    <property name="version" category="Advanced" kind="enum" default="2" required="false">
+      <enum-values>
+        <value>2</value>
+        <value>3</value>
+      </enum-values>
+    </property>
 
     <property name="username" required="false" category="Authentication"/>
     <property name="password" required="false" password="true" category="Authentication" />
@@ -37,8 +43,12 @@
     <property name="chartName" />
     <property name="chartVersion" />
     <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.AppliedConfigFile" as-containment="true"/>
-    <property name="testRelease" kind="boolean" default="true" required="false" />
-    
+    <property name="testRelease" kind="boolean" default="true" required="false" />    
+  </type>
+
+  <type type="helm.AppliedConfigFile" extends="udm.EmbeddedDeployedArtifact" 
+      container-type="helm.Release" deployable-type="helm.ConfigFile">
+      <generate-deployable type="helm.ConfigFile" extends="udm.EmbeddedDeployableArtifact"/>
   </type>
 
   <type-modification type="helm.Chart">
@@ -46,7 +56,7 @@
   </type-modification>
 
   <type-modification type="helm.ConfigFile">
-    <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json | htm | html | xml | xsd | xsl | xslt)"/>
+    <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json )"/>
   </type-modification>
 
 </synthetic>

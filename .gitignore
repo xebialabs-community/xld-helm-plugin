@@ -6,3 +6,5 @@ xl-deploy-9.5.0-server
 .project
 .settings
 xl-deploy-8.5.6-server
+.vscode/
+bin

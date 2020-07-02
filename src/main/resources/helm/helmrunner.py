@@ -1,5 +1,5 @@
 #
-# Copyright 2019 XEBIALABS
+# Copyright 2020 XEBIALABS
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 #
@@ -39,7 +39,6 @@ class HelmRunner:
         return helm
 
 
-
     def command_line(self,session,deployed):
         raise Exception("Not Implemented")
 
@@ -48,7 +47,7 @@ class HelmRunner:
         try:
             session = OverthereHostSession(self.helmclient.host,stream_command_output=False)
             command_line = self.command_line(session,deployed)
-            print command_line
+            print(command_line)
         finally:
             session.close_conn()
 
@@ -56,12 +55,12 @@ class HelmRunner:
         try:
             session = OverthereHostSession(self.helmclient.host,stream_command_output=False)
             command_line = self.command_line(session,deployed)
-            print command_line
+            print(command_line)
             uploaded_runner = session.upload_text_content_to_work_dir(command_line,'xldeploy_helm.sh',executable=True)
-            print uploaded_runner.path
+            print(uploaded_runner.path)
             response = session.execute(command_line,check_success=False)
-            print "\n ".join(response.stdout)
-            print "\n ".join(response.stderr)
+            print "\n".join(response.stdout)
+            print "\n".join(response.stderr)
             rc = response.rc
             if response.rc > 0:
                 sys.exit(rc)
@@ -81,7 +80,13 @@ class HelmInstall(HelmRunner):
                 'name':deployed.name,
                 'chartVersion': deployed.chartVersion}
 
-        parameters = "{name} {chartName} --namespace {namespace}  --version {chartVersion}".format(**values)
+        if int(self.helmclient.version) == 2:
+            parameters = "{chartName} --namespace {namespace}  --name {name} --version {chartVersion}".format(**values)
+        elif int(self.helmclient.version) == 3:
+            parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
+        else:
+            raise Exception("Unknown helm version {0}".format(self.helmclient.version))
+        
         for cf in deployed.configurationFiles:
             uploaded_file = session.upload_file_to_work_dir(cf.getFile())
             parameters = parameters +" -f "+uploaded_file.getPath()
@@ -101,7 +106,13 @@ class HelmUpgrade(HelmRunner):
                 'name':deployed.name,
                 'chartVersion': deployed.chartVersion}
 
-        parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
+        if int(self.helmclient.version) == 2:
+            parameters = "{chartName} --namespace {namespace}  --name {name} --version {chartVersion}".format(**values)
+        elif int(self.helmclient.version) == 3:
+            parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
+        else:
+            raise Exception("Unknown helm version {0}".format(self.helmclient.version))
+
         for cf in deployed.configurationFiles:
             uploaded_file = session.upload_file_to_work_dir(cf.getFile())
             parameters = parameters +" -f "+uploaded_file.getPath()

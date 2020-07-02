@@ -37,8 +37,12 @@
     <property name="chartName" />
     <property name="chartVersion" />
     <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.AppliedConfigFile" as-containment="true"/>
-    <property name="testRelease" kind="boolean" default="true" required="false" />
-    
+    <property name="testRelease" kind="boolean" default="true" required="false" />    
+  </type>
+
+  <type type="helm.AppliedConfigFile" extends="udm.EmbeddedDeployedArtifact" 
+      container-type="helm.Release" deployable-type="helm.ConfigFile">
+      <generate-deployable type="helm.ConfigFile" extends="udm.EmbeddedDeployableArtifact"/>
   </type>
 
   <type-modification type="helm.Chart">
@@ -46,7 +50,7 @@
   </type-modification>
 
   <type-modification type="helm.ConfigFile">
-    <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json | htm | html | xml | xsd | xsl | xslt)"/>
+    <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json )"/>
   </type-modification>
 
 </synthetic>

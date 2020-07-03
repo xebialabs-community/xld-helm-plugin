@@ -72,7 +72,7 @@ class HelmRunner:
 class HelmInstall(HelmRunner):
 
     def command_line(self,session,deployed):
-        return "{0} install {1}".format(self.get_helm_command(),self.parameters(session,deployed))
+        return "{0} upgrade --install {1}".format(self.get_helm_command(),self.parameters(session,deployed))
 
     def parameters(self,session,deployed):
         values = {'chartName':deployed.chartName,
@@ -80,9 +80,7 @@ class HelmInstall(HelmRunner):
                 'name':deployed.name,
                 'chartVersion': deployed.chartVersion}
 
-        if int(self.helmclient.version) == 2:
-            parameters = "{chartName} --namespace {namespace}  --name {name} --version {chartVersion}".format(**values)
-        elif int(self.helmclient.version) == 3:
+        if int(self.helmclient.version) == 2 or int(self.helmclient.version) == 3:
             parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
         else:
             raise Exception("Unknown helm version {0}".format(self.helmclient.version))
@@ -106,9 +104,7 @@ class HelmUpgrade(HelmRunner):
                 'name':deployed.name,
                 'chartVersion': deployed.chartVersion}
 
-        if int(self.helmclient.version) == 2:
-            parameters = "{chartName} --namespace {namespace}  --name {name} --version {chartVersion}".format(**values)
-        elif int(self.helmclient.version) == 3:
+        if int(self.helmclient.version) == 2 or int(self.helmclient.version) == 3:
             parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
         else:
             raise Exception("Unknown helm version {0}".format(self.helmclient.version))

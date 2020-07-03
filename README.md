@@ -13,10 +13,13 @@
 ## Preface
 
 This document describes the functionality provided by the XL Deploy Helm plugin 
+* Support Helm V3 (default)
 * Support Helm V2 
 * Tested helm running on Unix machines
 
 ## Overview
+
+This plugin will allow to deploy a helm chart using XLD. To run the helm chart you need to have the helm binary installed and connect via ssh using overthere plugin.
 
 ## Installation
 

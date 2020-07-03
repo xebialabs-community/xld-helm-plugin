@@ -11,9 +11,9 @@
 -->
 <#include "/helm/helm.ftl">
 
-<#if helmclient.version == 3>
+<#if helmclient.version?number == 3>
     ${helm} delete  ${previousDeployed.name}
-<#elseif helmclient.version == 2>
+<#elseif helmclient.version?number == 2>
     ${helm} delete  --purge  ${previousDeployed.name}
 <#else>
     echo 'ERROR: helm version unknown'

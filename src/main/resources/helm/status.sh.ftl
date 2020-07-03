@@ -11,9 +11,9 @@
 -->
 <#include "/helm/helm.ftl">
 
-<#if helmclient.version?number == "3">
+<#if helmclient.version == "3">
 ${helm} ls --namespace ${deployed.container.namespaceName} --filter ${deployed.name}
-<#elseif helmclient.version?number == "2">
+<#elseif helmclient.version == "2">
 ${helm} ls --namespace ${deployed.container.namespaceName} ${deployed.name}
 <#else>
 echo 'ERROR: helm version unknown'

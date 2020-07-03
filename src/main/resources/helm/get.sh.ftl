@@ -11,10 +11,10 @@
 -->
 <#include "/helm/helm.ftl">
 
-<#if helmclient.version == 3>
-    ${helm} get  all  ${deployed.name}
-<#elseif helmclient.version == 2>
-    ${helm} get  ${deployed.name}
+<#if helmclient.version == "3">
+${helm} get  all  ${deployed.name}
+<#elseif helmclient.version == "2">
+${helm} get  ${deployed.name}
 <#else>
-    echo 'ERROR: helm version unknown'
+echo 'ERROR: helm version unknown'
 </#if>

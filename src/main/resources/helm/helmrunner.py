@@ -16,6 +16,7 @@ class HelmRunner:
 
     def __init__(self,helmclient):
         self.helmclient = helmclient
+        self._preview = False
 
     def get_helm_command(self):
         helm = '{0}/helm'.format(self.helmclient.home)
@@ -35,7 +36,10 @@ class HelmRunner:
         if self.helmclient.username is not None:
             helm = helm + ' --username {0}'.format(self.helmclient.username)
         if self.helmclient.password is not None:
-            helm = helm + ' --password {0}'.format(self.helmclient.password)
+            if not self._preview:
+                helm = helm + ' --password {0}'.format(self.helmclient.password)
+            else:
+                helm = helm + ' --password ********'
         return helm
 
 
@@ -45,6 +49,7 @@ class HelmRunner:
 
     def preview(self,deployed):
         try:
+            self._preview = True
             session = OverthereHostSession(self.helmclient.host,stream_command_output=False)
             command_line = self.command_line(session,deployed)
             print(command_line)

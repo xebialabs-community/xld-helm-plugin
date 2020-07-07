@@ -69,6 +69,7 @@ Done
 
 ![image](images/deployment-helm.png)
 
+![image](images/deployment-helm-executed.png)
 
 ## Features
 

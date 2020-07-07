@@ -72,6 +72,14 @@ class HelmRunner:
         finally:
             session.close_conn()
 
+    def generate_variable(self,deployed):
+        vars = ["--set {0}={1}".format(k,v) for k,v in deployed.inputVariables.items()]
+        if self._preview:
+            vars.extend(["--set {0}=********".format(k) for k,v in deployed.secretInputVariables.items()])
+        else:
+            vars.extend(["--set {0}={1}".format(k,v) for k,v in deployed.secretInputVariables.items()])
+        return " ".join(vars)
+
 
 
 class HelmInstall(HelmRunner):
@@ -90,6 +98,8 @@ class HelmInstall(HelmRunner):
         else:
             raise Exception("Unknown helm version {0}".format(self.helmclient.version))
         
+        parameters = parameters + " "+ self.generate_variable(deployed)
+
         for cf in deployed.configurationFiles:
             uploaded_file = session.upload_file_to_work_dir(cf.getFile())
             parameters = parameters +" -f "+uploaded_file.getPath()
@@ -113,6 +123,8 @@ class HelmUpgrade(HelmRunner):
             parameters = "{name} {chartName} --namespace {namespace} --version {chartVersion}".format(**values)
         else:
             raise Exception("Unknown helm version {0}".format(self.helmclient.version))
+        
+        parameters = parameters + " "+ self.generate_variable(deployed)
 
         for cf in deployed.configurationFiles:
             uploaded_file = session.upload_file_to_work_dir(cf.getFile())

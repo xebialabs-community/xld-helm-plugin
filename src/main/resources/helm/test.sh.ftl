@@ -10,4 +10,4 @@
 
 -->
 <#include "/helm/helm.ftl">
-${helm} test  ${deployed.name}
+${helm} test  --namespace ${deployed.container.namespaceName}  ${deployed.name}

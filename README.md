@@ -12,9 +12,10 @@
 
 ## Preface
 
-This document describes the functionality provided by the XL Deploy Helm plugin 
+This document describes the functionality provided by the XL Deploy Helm plugin
+
 * Support Helm V3 (default)
-* Support Helm V2 
+* Support Helm V2
 * Tested helm running on Unix machines
 
 ## Overview
@@ -30,10 +31,11 @@ This plugin will allow to deploy a helm chart using XLD. To run the helm chart y
 * Restart the XL Deploy server.
 
 ## Sample Configuration
+
 A sample configuration is available in the project.
 
-```
-$xl apply --xl-deploy-url http://localhost:4541 -f xebialabs.yaml 
+```bash
+$xl apply --xl-deploy-url http://localhost:4541 -f xebialabs.yaml
 
 
 [1/4] Applying infrastructure.yaml (imported by xebialabs.yaml)
@@ -62,7 +64,16 @@ $xl apply --xl-deploy-url http://localhost:4541 -f xebialabs.yaml
 [4/4] Applying xebialabs.yaml
 Done
 ```
+
+### Deploy 2 Helm Charts in parallel with XLDeploy
+
+![image](images/deployment-helm.png)
+
+
 ## Features
+
+* Deploy & upgrade `helm.Chart` V2 & V3
+
 
 ## References
 

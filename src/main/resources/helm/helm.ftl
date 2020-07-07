@@ -11,6 +11,8 @@
 -->
 set -x
 <#assign helmCmdLine = ["${helmclient.home}/helm"]/>
+
+
 <#if helmclient.debug>
  <#assign helmCmdLine = helmCmdLine + ["--debug"]/>
 </#if>

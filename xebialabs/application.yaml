@@ -2,34 +2,58 @@
 apiVersion: xl-deploy/v1
 kind: Applications
 spec:
-- name: MyHelmSampleApp
+- name: Applications/MyHelmSampleApp
   type: udm.Application
+  lastVersion: 3.0.2
   children:
-  - name: 2.0.4
+  - name: 3.0.1
     type: udm.DeploymentPackage
+    deployables:
+    - name: tomcat
+      type: helm.Chart
+      chartName: bitnami/tomcat
+      chartVersion: 6.3.12
+      testRelease: True
+      inputVariables:
+        tomcatUsername: scott
+      secretInputVariables:
+        tomcatPassword: tiger
+  - name: 3.0.2
+    type: udm.DeploymentPackage
+    orchestrator:
+    - parallel-by-deployed
     deployables:
     - name: mariadb
       type: helm.Chart
-      chartName: stable/mariadb
-      chartVersion: 5.2.0
+      chartName: bitnami/mariadb
+      chartVersion: 7.6.1
+      testRelease: False
+      inputVariables:
+        db.name: petclinic
+        replication.enabled: false
+        master.persistence.size: 1Mi
       configurationFiles:
       - name: config.yaml
         type: helm.ConfigFile
         file: !file "artifacts/config.yaml"
-      - name: override.yaml
-        type: helm.ConfigFile
-        file: !file "artifacts/override.yaml"
-  - name: 2.0.5
+    - name: tomcat
+      type: helm.Chart
+      chartName: bitnami/tomcat
+      chartVersion: 6.3.12
+      testRelease: True
+      inputVariables:
+        tomcatUsername: scott
+      secretInputVariables:
+        tomcatPassword: tiger
+  - name: 3.0.0
     type: udm.DeploymentPackage
     deployables:
-    - name: mariadb
+    - name: tomcat
       type: helm.Chart
-      chartName: stable/mariadb
-      chartVersion: 5.2.3
-      configurationFiles:
-      - name: config.yaml
-        type: helm.ConfigFile
-        file: !file "artifacts/config205.yaml"
-      - name: override.yaml
-        type: helm.ConfigFile
-        file: !file "artifacts/override205.yaml"
+      chartName: bitnami/tomcat
+      chartVersion: 6.3.11
+      testRelease: True
+      inputVariables:
+        tomcatUsername: scott
+      secretInputVariables:
+        tomcatPassword: tiger

@@ -1,5 +1,0 @@
-apiVersion: xl-deploy/v1
-kind: Environments
-metadata:
-  Environments-home: Environments/xl-demo
-spec:

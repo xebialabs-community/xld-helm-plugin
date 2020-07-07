@@ -1,2 +1,2 @@
-mariadbUser: {{username}}
-mariadbDatabase: {{password}}
+db.user: {{username}}
+db.password: {{password}}

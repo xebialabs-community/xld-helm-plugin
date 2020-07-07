@@ -42,6 +42,7 @@
     <generate-deployable type="helm.Chart" extends="udm.BaseDeployable"/>
     <property name="chartName" />
     <property name="chartVersion" />
+    <property name="repositoryUrl" description="url for the Helm repository" required="false" />    
     <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.AppliedConfigFile" as-containment="true"/>
     <property name="testRelease" kind="boolean" default="true" required="false" />  
     <property name="inputVariables" kind="map_string_string" required="false" description="Input variables to be used in the Helm  configuration."/>  
@@ -60,5 +61,6 @@
   <type-modification type="helm.ConfigFile">
     <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json )"/>
   </type-modification>
+
 
 </synthetic>

@@ -30,6 +30,8 @@
     </steps>
   </rule>
 
+
+
   <rule name="helm.release.deploy" scope="deployed">
     <conditions>
       <type>helm.Release</type>
@@ -87,6 +89,30 @@
         </steps>
   </rule>
 
+  <rule name="helm.release.repository.add" scope="deployed">
+    <conditions>
+      <type>helm.Release</type>
+      <operation>CREATE</operation>
+      <operation>MODIFY</operation>
+      <expression>deployed.repositoryUrl</expression>
+    </conditions>
+    <steps>
+      <os-script>
+        <order>55</order>
+        <description expression="true">"Add the Helm repository {0} on {1} namespace".format(deployed.repositoryUrl,deployed.container.name)</description>
+        <script>helm/repository_add</script>
+        <freemarker-context>
+          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+        </freemarker-context>
+        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
+      </os-script>
+        </steps>
+  </rule>
+
+  
+
+  
+
 
   <rule name="helm.release.test" scope="deployed">
     <conditions>
@@ -137,7 +163,6 @@
 
     </steps>
   </rule>
-
 
 
 </rules>

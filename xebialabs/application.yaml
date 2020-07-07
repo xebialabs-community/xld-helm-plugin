@@ -12,6 +12,7 @@ spec:
     - name: tomcat
       type: helm.Chart
       chartName: bitnami/tomcat
+      repositoryUrl: https://charts.bitnami.com/bitnami
       chartVersion: 6.3.12
       testRelease: True
       inputVariables:
@@ -22,11 +23,12 @@ spec:
     type: udm.DeploymentPackage
     orchestrator:
     - parallel-by-deployed
-    deployables:
+    deployables:   
     - name: mariadb
       type: helm.Chart
       chartName: bitnami/mariadb
       chartVersion: 7.6.1
+      repositoryUrl: https://charts.bitnami.com/bitnami
       testRelease: False
       inputVariables:
         db.name: petclinic
@@ -39,6 +41,7 @@ spec:
     - name: tomcat
       type: helm.Chart
       chartName: bitnami/tomcat
+      repositoryUrl: https://charts.bitnami.com/bitnami
       chartVersion: 6.3.12
       testRelease: True
       inputVariables:
@@ -51,6 +54,7 @@ spec:
     - name: tomcat
       type: helm.Chart
       chartName: bitnami/tomcat
+      repositoryUrl: https://charts.bitnami.com/bitnami
       chartVersion: 6.3.11
       testRelease: True
       inputVariables:

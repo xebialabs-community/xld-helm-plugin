@@ -10,4 +10,4 @@
 
 -->
 <#include "/helm/helm.ftl">
-${helm} repo add ${chartName} ${repositoryUrl}
+${helm} repo update

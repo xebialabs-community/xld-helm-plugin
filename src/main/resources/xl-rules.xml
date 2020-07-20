@@ -11,158 +11,147 @@
 
 -->
 <rules xmlns="http://www.xebialabs.com/xl-deploy/xl-rules">
-  <rule name="helm.release.init" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>CREATE</operation>
-      <expression>False</expression>
-    </conditions>
-    <steps>
-      <os-script>
-        <order>55</order>
-        <description expression="true">"Initialize helm on {0}".format(deployed.container.name)</description>
-        <script>helm/init</script>
-        <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
-      </os-script>
-    </steps>
-  </rule>
-
-
-
-  <rule name="helm.release.deploy" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>CREATE</operation>
-    </conditions>
-    <steps>
-      <jython>
-        <order>60</order>
-        <description expression="true">"Install the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/install.py</script>
-        <jython-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </jython-context>
-        <preview-script>helm/preview_install.py</preview-script>
-      </jython>
-      <checkpoint/>
-    </steps>
-  </rule>
-
-  <rule name="helm.release.upgrade" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>MODIFY</operation>
-    </conditions>
-    <steps>
-      <jython>
-        <order>60</order>
-        <description expression="true">"Upgrade the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/upgrade.py</script>
-        <jython-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </jython-context>
-        <preview-script>helm/preview_upgrade.py</preview-script>
-      </jython>
-      <checkpoint/>
-    </steps>
-  </rule>
-
-  <rule name="helm.release.get" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>CREATE</operation>
-      <operation>MODIFY</operation>
-    </conditions>
-    <steps>
-      <os-script>
-        <order>62</order>
-        <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/status</script>
-        <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
-      </os-script>
+    <rule name="helm.release.init" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>CREATE</operation>
+            <expression>False</expression>
+        </conditions>
+        <steps>
+            <os-script>
+                <order>55</order>
+                <description expression="true">"Initialize helm on {0}".format(deployed.container.name)</description>
+                <script>helm/init</script>
+                <freemarker-context>
+                    <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                </freemarker-context>
+                <target-host expression="true">deployed.container.container.helmClient.host</target-host>
+            </os-script>
         </steps>
-  </rule>
+    </rule>
 
-  <rule name="helm.release.repository.add" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>CREATE</operation>
-      <operation>MODIFY</operation>
-      <expression>deployed.repositoryUrl</expression>
-    </conditions>
-    <steps>
-      <os-script>
-        <order>55</order>
-        <description expression="true">"Add the Helm repository {0} on {1} namespace".format(deployed.repositoryUrl,deployed.container.name)</description>
-        <script>helm/repository_add</script>
-        <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
-      </os-script>
+
+    <rule name="helm.release.deploy" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>CREATE</operation>
+        </conditions>
+        <steps>
+            <jython>
+                <order>60</order>
+                <description expression="true">"Install the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
+                <script>helm/install.py</script>
+                <jython-context>
+                    <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                </jython-context>
+                <preview-script>helm/preview_install.py</preview-script>
+            </jython>
+            <checkpoint/>
         </steps>
-  </rule>
+    </rule>
 
-  
+    <rule name="helm.release.upgrade" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>MODIFY</operation>
+        </conditions>
+        <steps>
+            <jython>
+                <order>60</order>
+                <description expression="true">"Upgrade the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
+                <script>helm/upgrade.py</script>
+                <jython-context>
+                    <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                </jython-context>
+                <preview-script>helm/preview_upgrade.py</preview-script>
+            </jython>
+            <checkpoint/>
+        </steps>
+    </rule>
 
-  
+    <rule name="helm.release.get" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+        </conditions>
+        <steps>
+            <os-script>
+                <order>62</order>
+                <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
+                <script>helm/status</script>
+                <freemarker-context>
+                    <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                </freemarker-context>
+                <target-host expression="true">deployed.container.container.helmClient.host</target-host>
+            </os-script>
+        </steps>
+    </rule>
+
+    <rule name="helm.release.repository.add" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+            <expression>deployed.repositoryUrl</expression>
+        </conditions>
+        <planning-script-path>helm/planning/repositories_add.py</planning-script-path>
+    </rule>
+
+    <rule name="helm.release.repositories.update" scope="plan">
+        <planning-script-path>helm/planning/repositories_update.py</planning-script-path>
+    </rule>
 
 
-  <rule name="helm.release.test" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>CREATE</operation>
-      <operation>MODIFY</operation>
-      <expression>deployed.testRelease</expression>
-    </conditions>
-    <steps>
-      <os-script>
-        <order>65</order>
-        <description expression="true">"Test the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
-        <script>helm/test</script>
-        <freemarker-context>
-          <helmclient expression="true">deployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">deployed.container.container.helmClient.host</target-host>
-      </os-script>
-    </steps>
-  </rule>
+    <rule name="helm.release.test" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+            <expression>deployed.testRelease</expression>
+        </conditions>
+        <steps>
+            <os-script>
+                <order>65</order>
+                <description expression="true">"Test the Helm {0} release on {1} namespace".format(deployed.name,deployed.container.name)</description>
+                <script>helm/test</script>
+                <freemarker-context>
+                    <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                </freemarker-context>
+                <target-host expression="true">deployed.container.container.helmClient.host</target-host>
+            </os-script>
+        </steps>
+    </rule>
 
-  <rule name="helm.release.undeploy" scope="deployed">
-    <conditions>
-      <type>helm.Release</type>
-      <operation>DESTROY</operation>
-    </conditions>
-    <steps>
-      <os-script>
-        <order>40</order>
-        <description expression="true">"Uninstall the Helm {0} release from {1} namespace".format(previousDeployed.name,previousDeployed.container.name)</description>
-        <script>helm/delete</script>
-        <freemarker-context>
-          <helmcommand>install</helmcommand>
-          <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
-        </freemarker-context>
-        <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
-      </os-script>
-      <os-script>
-        <order>42</order>
-        <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(previousDeployed.name,previousDeployed.container.name)</description>
-        <script>helm/status</script>
-        <freemarker-context>
-          <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
-          <deployed expression="true">previousDeployed</deployed>
-        </freemarker-context>
-        <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
-      </os-script>
+    <rule name="helm.release.undeploy" scope="deployed">
+        <conditions>
+            <type>helm.Release</type>
+            <operation>DESTROY</operation>
+        </conditions>
+        <steps>
+            <os-script>
+                <order>40</order>
+                <description expression="true">"Uninstall the Helm {0} release from {1} namespace".format(previousDeployed.name,previousDeployed.container.name)</description>
+                <script>helm/delete</script>
+                <freemarker-context>
+                    <helmcommand>install</helmcommand>
+                    <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
+                </freemarker-context>
+                <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
+            </os-script>
+            <os-script>
+                <order>42</order>
+                <description expression="true">"Display the status of Helm {0} release on {1} namespace".format(previousDeployed.name,previousDeployed.container.name)</description>
+                <script>helm/status</script>
+                <freemarker-context>
+                    <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
+                    <deployed expression="true">previousDeployed</deployed>
+                </freemarker-context>
+                <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
+            </os-script>
 
-    </steps>
-  </rule>
+        </steps>
+    </rule>
 
 
 </rules>

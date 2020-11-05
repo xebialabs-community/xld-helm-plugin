@@ -11,9 +11,10 @@
 
 -->
 <rules xmlns="http://www.xebialabs.com/xl-deploy/xl-rules">
-    <rule name="helm.release.init" scope="deployed">
+    <rule name="helm.K8SRelease.init" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>CREATE</operation>
             <expression>False</expression>
         </conditions>
@@ -31,9 +32,10 @@
     </rule>
 
 
-    <rule name="helm.release.deploy" scope="deployed">
+    <rule name="helm.K8SRelease.deploy" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>CREATE</operation>
         </conditions>
         <steps>
@@ -50,9 +52,10 @@
         </steps>
     </rule>
 
-    <rule name="helm.release.upgrade" scope="deployed">
+    <rule name="helm.K8SRelease.upgrade" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>MODIFY</operation>
         </conditions>
         <steps>
@@ -69,9 +72,10 @@
         </steps>
     </rule>
 
-    <rule name="helm.release.get" scope="deployed">
+    <rule name="helm.K8SRelease.get" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
         </conditions>
@@ -82,15 +86,17 @@
                 <script>helm/status</script>
                 <freemarker-context>
                     <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                    <namespaceName expression="true">deployed.container.namespaceName if deployed.container.hasProperty('namespaceName') else deployed.container.projectName</namespaceName>
                 </freemarker-context>
                 <target-host expression="true">deployed.container.container.helmClient.host</target-host>
             </os-script>
         </steps>
     </rule>
 
-    <rule name="helm.release.repository.add" scope="deployed">
+    <rule name="helm.K8SRelease.repository.add" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
             <expression>deployed.repositoryUrl</expression>
@@ -98,14 +104,15 @@
         <planning-script-path>helm/planning/repositories_add.py</planning-script-path>
     </rule>
 
-    <rule name="helm.release.repositories.update" scope="plan">
+    <rule name="helm.K8SRelease.repositories.update" scope="plan">
         <planning-script-path>helm/planning/repositories_update.py</planning-script-path>
     </rule>
 
 
-    <rule name="helm.release.test" scope="deployed">
+    <rule name="helm.K8SRelease.test" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>CREATE</operation>
             <operation>MODIFY</operation>
             <expression>deployed.testRelease</expression>
@@ -117,15 +124,17 @@
                 <script>helm/test</script>
                 <freemarker-context>
                     <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                    <namespaceName expression="true">deployed.container.namespaceName if deployed.container.hasProperty('namespaceName') else deployed.container.projectName</namespaceName>
                 </freemarker-context>
                 <target-host expression="true">deployed.container.container.helmClient.host</target-host>
             </os-script>
         </steps>
     </rule>
 
-    <rule name="helm.release.undeploy" scope="deployed">
+    <rule name="helm.K8SRelease.undeploy" scope="deployed">
         <conditions>
-            <type>helm.Release</type>
+            <type>helm.K8SRelease</type>
+            <type>helm.OpenshiftRelease</type>
             <operation>DESTROY</operation>
         </conditions>
         <steps>
@@ -136,6 +145,7 @@
                 <freemarker-context>
                     <helmcommand>install</helmcommand>
                     <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
+                    <namespaceName expression="true">previousDeployed.container.namespaceName if previousDeployed.container.hasProperty('namespaceName' ) else previousDeployed.container.projectName</namespaceName>
                 </freemarker-context>
                 <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
             </os-script>
@@ -146,6 +156,7 @@
                 <freemarker-context>
                     <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
                     <deployed expression="true">previousDeployed</deployed>
+                    <namespaceName expression="true">previousDeployed.container.namespaceName if previousDeployed.container.hasProperty('namespaceName') else previousDeployed.container.projectName</namespaceName>
                 </freemarker-context>
                 <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
             </os-script>

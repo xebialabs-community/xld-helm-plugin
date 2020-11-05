@@ -21,7 +21,7 @@ def containers():
 
 for container in containers():
     context.addStep(steps.os_script(
-        description="Update the repositories on {0}".format(container),
+        description="Update the repositories on {0}".format(container.name),
         order=58,
         script="helm/repository_update",
         freemarker_context={'helmclient': container.container.helmClient},

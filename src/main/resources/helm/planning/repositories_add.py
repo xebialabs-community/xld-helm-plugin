@@ -14,7 +14,7 @@ chartName = deployed.chartName.split('/')[0]
 container = deployed.container
 
 context.addStep(steps.os_script(
-    description="Add the Helm repository {0} on {1}".format(repositoryUrl, container),
+    description="Add the Helm repository {0} on {1}".format(repositoryUrl, container.name),
     order=55,
     script="helm/repository_add",
     freemarker_context={'helmclient': container.container.helmClient, 'chartName': chartName, 'repositoryUrl': repositoryUrl},

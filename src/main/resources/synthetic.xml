@@ -11,8 +11,7 @@
 
 -->
 <synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns="http://www.xebialabs.com/deployit/synthetic"
-           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+    xmlns="http://www.xebialabs.com/deployit/synthetic" xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
 
     <type type="helm.Client" extends="generic.Container">
         <property name="home" default="/usr/local/bin"/>
@@ -37,9 +36,11 @@
         <property name="helmClient" kind="ci" required="false" referenced-type="helm.Client" category="Helm"/>
     </type-modification>
 
-    <type type="helm.Release" extends="udm.BaseDeployed"
-          container-type="k8s.Namespace" deployable-type="helm.Chart">
-        <generate-deployable type="helm.Chart" extends="udm.BaseDeployable"/>
+    <type-modification type="openshift.Server">
+        <property name="helmClient" kind="ci" required="false" referenced-type="helm.Client" category="Helm"/>
+    </type-modification>
+
+    <type type="helm.K8SRelease" extends="udm.BaseDeployed" container-type="k8s.Namespace" deployable-type="helm.Chart">
         <property name="chartName"/>
         <property name="chartVersion"/>
         <property name="repositoryUrl" description="url for the Helm repository" required="false" category="Repository"/>
@@ -50,18 +51,38 @@
         <property name="secretInputVariables" kind="map_string_string" password="true" required="false" description="Secret input simple (int,string) variables to be used in the Helm configuration."/>
     </type>
 
-    <type type="helm.AppliedConfigFile" extends="udm.EmbeddedDeployedArtifact"
-          container-type="helm.Release" deployable-type="helm.ConfigFile">
+    <type type="helm.AppliedConfigFile" extends="udm.EmbeddedDeployedArtifact" container-type="helm.Release" deployable-type="helm.ConfigFile">
         <generate-deployable type="helm.ConfigFile" extends="udm.EmbeddedDeployableArtifact"/>
     </type>
 
-    <type-modification type="helm.Chart">
+    <type type="helm.Chart" extends="udm.BaseDeployable">
+        <property name="chartName"/>
+        <property name="chartVersion"/>
+        <property name="repositoryUrl" description="url for the Helm repository" required="false" category="Repository"/>
+        <property name="updateRepositories" kind="boolean" default="true" required="false" description="if true the helm repo will be updated" category="Repository"/>
         <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.ConfigFile" as-containment="true"/>
-    </type-modification>
+        <property name="testRelease" kind="boolean" default="true" required="false"/>
+        <property name="inputVariables" kind="map_string_string" required="false" description="Input variables to be used in the Helm  configuration."/>
+        <property name="secretInputVariables" kind="map_string_string" password="true" required="false" description="Secret input simple (int,string) variables to be used in the Helm configuration."/>
+    </type>
 
     <type-modification type="helm.ConfigFile">
         <property name="textFileNamesRegex" hidden="true" default=".+\.(cfg | conf | config | ini | properties | yaml | txt | yml | json )"/>
     </type-modification>
 
+    <type type="helm.OpenshiftRelease" extends="udm.BaseDeployed" container-type="openshift.Project" deployable-type="helm.Chart">
+        <property name="chartName"/>
+        <property name="chartVersion"/>
+        <property name="repositoryUrl" description="url for the Helm repository" required="false" category="Repository"/>
+        <property name="updateRepositories" kind="boolean" default="true" required="false" description="if true the helm repo will be updated" category="Repository"/>
+        <property name="configurationFiles" kind="set_of_ci" referenced-type="helm.AppliedConfigFile" as-containment="true"/>
+        <property name="testRelease" kind="boolean" default="true" required="false"/>
+        <property name="inputVariables" kind="map_string_string" required="false" description="Input variables to be used in the Helm  configuration."/>
+        <property name="secretInputVariables" kind="map_string_string" password="true" required="false" description="Secret input simple (int,string) variables to be used in the Helm configuration."/>
+    </type>
+
+    <type-modification type="openshift.Server">
+        <property name="helmClient" kind="ci" required="false" referenced-type="helm.Client" category="Helm"/>
+    </type-modification>
 
 </synthetic>

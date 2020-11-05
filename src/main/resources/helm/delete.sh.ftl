@@ -12,9 +12,9 @@
 <#include "/helm/helm.ftl">
 
 <#if helmclient.version == "3">
-${helm} delete --namespace ${previousDeployed.container.namespaceName}  ${previousDeployed.name}
+${helm} delete --namespace ${namespaceName}  ${previousDeployed.name}
 <#elseif helmclient.version == "2">
-${helm} delete --namespace ${previousDeployed.container.namespaceName} --purge  ${previousDeployed.name}
+${helm} delete --namespace ${namespaceName} --purge  ${previousDeployed.name}
 <#else>
 echo 'ERROR: helm version unknown'
 </#if>

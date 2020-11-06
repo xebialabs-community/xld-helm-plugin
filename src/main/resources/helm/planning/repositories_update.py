@@ -12,7 +12,7 @@ def containers():
     containers = []
     for _delta in deltas.deltas:
         deployed = _delta.deployedOrPrevious
-        if (_delta.operation == "CREATE" or _delta.operation == "MODIFY") and deployed.type == "helm.Release":
+        if (_delta.operation == "CREATE" or _delta.operation == "MODIFY") and (deployed.type == "helm.K8SRelease" or deployed.type == "helm.OpenshiftRelease"):
             if deployed.updateRepositories:
                 containers.append(deployed.container)
 

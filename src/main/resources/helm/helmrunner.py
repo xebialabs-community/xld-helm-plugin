@@ -39,14 +39,13 @@ class HelmRunner:
 
         if self.helmclient.caFile is not None:
             helm = helm + ' --ca-file {0}'.format(self.helmclient.caFile)
-
+        
         if self.helmclient.username is not None:
             helm = helm + ' --username {0}'.format(self.helmclient.username)
-
+        
         if self.helmclient.password is not None:
             if not self._preview:
-                helm = helm + \
-                    ' --password {0}'.format(self.helmclient.password)
+                helm = helm + ' --password {0}'.format(self.helmclient.password)
             else:
                 helm = helm + ' --password ********'
         return helm

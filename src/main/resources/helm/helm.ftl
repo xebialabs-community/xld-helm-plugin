@@ -32,17 +32,6 @@ set -x
  <#assign helmCmdLine = helmCmdLine + ["--host ${helmclient.helmHost}"]/>
 </#if>
 
-<#if helmclient.caFile??>
- <#assign helmCmdLine = helmCmdLine + ["--ca-file ${helmclient.caFile}"]/>
-</#if>
-
-<#if helmclient.username??>
- <#assign helmCmdLine = helmCmdLine + ["--username ${helmclient.username}"]/>
-</#if>
-
-<#if helmclient.password??>
- <#assign helmCmdLine = helmCmdLine + ["--password ${helmclient.password}"]/>
-</#if>
 
 <#assign helm=helmCmdLine?join(" ")/>
 

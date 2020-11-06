@@ -9,5 +9,5 @@
 #
 
 from helm.helmrunner import HelmInstall
-HelmInstall(helmclient).execute(deployed)
+HelmInstall(helmclient,cluster).execute(deployed)
 

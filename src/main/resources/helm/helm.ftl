@@ -17,6 +17,10 @@ set -x
  <#assign helmCmdLine = helmCmdLine + ["--debug"]/>
 </#if>
 
+<#if helmclient.insecureConnection>
+ <#assign helmCmdLine = helmCmdLine + ["--insecure-skip-tls-verify"]/>
+</#if>
+
 <#if helmclient.kubeContext??>
  <#assign helmCmdLine = helmCmdLine + ["--kube-context ${helmclient.kubeContext}"]/>
 </#if>

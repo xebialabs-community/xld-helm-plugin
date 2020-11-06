@@ -9,5 +9,5 @@
 #
 
 from helm.helmrunner import HelmUpgrade
-HelmUpgrade(helmclient).preview(deployed)
+HelmUpgrade(helmclient,cluster).preview(deployed)
 

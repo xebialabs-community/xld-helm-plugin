@@ -45,6 +45,7 @@
                 <script>helm/install.py</script>
                 <jython-context>
                     <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                    <cluster expression="true">deployed.container.container</cluster>
                 </jython-context>
                 <preview-script>helm/preview_install.py</preview-script>
             </jython>
@@ -65,6 +66,7 @@
                 <script>helm/upgrade.py</script>
                 <jython-context>
                     <helmclient expression="true">deployed.container.container.helmClient</helmclient>
+                    <cluster expression="true">deployed.container.container</cluster>
                 </jython-context>
                 <preview-script>helm/preview_upgrade.py</preview-script>
             </jython>
@@ -87,6 +89,7 @@
                 <freemarker-context>
                     <helmclient expression="true">deployed.container.container.helmClient</helmclient>
                     <namespaceName expression="true">deployed.container.namespaceName if deployed.container.hasProperty('namespaceName') else deployed.container.projectName</namespaceName>
+                    <cluster expression="true">deployed.container.container</cluster>
                 </freemarker-context>
                 <target-host expression="true">deployed.container.container.helmClient.host</target-host>
             </os-script>
@@ -125,6 +128,7 @@
                 <freemarker-context>
                     <helmclient expression="true">deployed.container.container.helmClient</helmclient>
                     <namespaceName expression="true">deployed.container.namespaceName if deployed.container.hasProperty('namespaceName') else deployed.container.projectName</namespaceName>
+                    <cluster expression="true">deployed.container.container</cluster>
                 </freemarker-context>
                 <target-host expression="true">deployed.container.container.helmClient.host</target-host>
             </os-script>
@@ -146,6 +150,7 @@
                     <helmcommand>install</helmcommand>
                     <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
                     <namespaceName expression="true">previousDeployed.container.namespaceName if previousDeployed.container.hasProperty('namespaceName' ) else previousDeployed.container.projectName</namespaceName>
+                    <cluster expression="true">previousDeployed.container.container</cluster>
                 </freemarker-context>
                 <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
             </os-script>
@@ -157,6 +162,7 @@
                     <helmclient expression="true">previousDeployed.container.container.helmClient</helmclient>
                     <deployed expression="true">previousDeployed</deployed>
                     <namespaceName expression="true">previousDeployed.container.namespaceName if previousDeployed.container.hasProperty('namespaceName') else previousDeployed.container.projectName</namespaceName>
+                    <cluster expression="true">previousDeployed.container.container</cluster>
                 </freemarker-context>
                 <target-host expression="true">previousDeployed.container.container.helmClient.host</target-host>
             </os-script>

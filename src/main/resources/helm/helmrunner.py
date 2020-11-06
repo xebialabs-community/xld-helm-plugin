@@ -15,7 +15,7 @@ import sys
 
 class HelmRunner:
 
-    def __init__(self, helmclient):
+    def __init__(self, helmclient, cluster):
         self.helmclient = helmclient
         self._preview = False
 
@@ -33,6 +33,9 @@ class HelmRunner:
         
         if self.helmclient.debug:
             helm = helm + ' --debug'
+
+        if self.helmclient.insecureConnection:
+            helm = helm + ' --insecure-skip-tls-verify'
 
         if self.helmclient.caFile is not None:
             helm = helm + ' --ca-file {0}'.format(self.helmclient.caFile)

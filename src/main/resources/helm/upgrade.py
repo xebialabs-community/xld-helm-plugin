@@ -9,5 +9,5 @@
 #
 
 from helm.helmrunner import HelmUpgrade
-HelmUpgrade(helmclient).execute(deployed)
+HelmUpgrade(helmclient,cluster).execute(deployed)
 

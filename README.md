@@ -10,6 +10,9 @@
 [xld-helm-plugin-license-url]: https://opensource.org/licenses/MIT
 [xld-helm-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xld-helm-plugin/total.svg
 
+XL Deploy Helm plugin is deprecated now as the plugin is insourced to xebialabs organization.
+The plugin is available on https://dist.xebialabs.com/customer/xl-deploy/plugins/xld-helm-plugin
+
 ## Preface
 
 This document describes the functionality provided by the XL Deploy Helm plugin
